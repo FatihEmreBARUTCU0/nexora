@@ -87,7 +87,7 @@ export function FeaturedProductsGrid({ products }: { products: FeaturedProduct[]
                   );
                   toast.success("Ürün sepete eklendi!");
                 }}
-                className="absolute bottom-4 left-4 right-4 z-10 rounded-full border border-[#2a2a2a] bg-[#0a0a0a]/90 px-4 py-3 text-sm font-medium text-white opacity-0 transition group-hover:opacity-100"
+                className="absolute bottom-4 left-4 right-4 z-10 rounded-full border border-[#2a2a2a] bg-[#0a0a0a]/90 px-4 py-3 text-sm font-medium text-white transition sm:opacity-0 sm:group-hover:opacity-100"
               >
                 Sepete Ekle
               </button>

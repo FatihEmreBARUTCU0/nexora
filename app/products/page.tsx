@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SlidersHorizontal } from "lucide-react";
 import { FavoriteButton } from "@/components/product/FavoriteButton";
 import { ProductsFilters } from "@/components/products/ProductsFilters";
+import { MobileFilterPanel } from "@/components/products/MobileFilterPanel";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
@@ -46,7 +46,6 @@ async function getProducts(filters: {
     const query: Record<string, unknown> = { isActive: true };
 
     if (filters.category) {
-      // category param is a slug (e.g. "elektronik"), look up its ObjectId first
       const categoryDoc = await Category.findOne({ slug: filters.category }).select("_id").lean<{ _id: unknown }>();
       if (categoryDoc) {
         query.category = categoryDoc._id;
@@ -80,27 +79,34 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const resolvedSearchParams = await searchParams;
   const products = await getProducts(resolvedSearchParams);
 
+  const filterProps = {
+    category: resolvedSearchParams.category,
+    minPrice: resolvedSearchParams.minPrice,
+    maxPrice: resolvedSearchParams.maxPrice,
+    sort: resolvedSearchParams.sort,
+  };
+
   return (
     <div className="mx-auto w-full max-w-7xl px-6 pb-24 pt-12 md:px-10">
-      <div className="mb-10 flex items-center gap-4">
+      <div className="mb-6 flex items-center gap-4">
         <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white md:text-4xl">
           Ürünler
         </h1>
         <span className="h-px flex-1 bg-[#1f1f1f]" />
       </div>
 
+      {/* Mobile filter toggle — only shown on small screens */}
+      <div className="mb-4 lg:hidden">
+        <MobileFilterPanel {...filterProps} />
+      </div>
+
       <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
-        <aside className="h-fit rounded-2xl border border-[#1f1f1f] bg-[#111111] p-6">
+        {/* Desktop sidebar — hidden on mobile */}
+        <aside className="hidden h-fit rounded-2xl border border-[#1f1f1f] bg-[#111111] p-6 lg:block">
           <div className="mb-8 flex items-center gap-2 text-white">
-            <SlidersHorizontal size={16} />
             <p className="text-sm font-medium uppercase tracking-[0.15em]">Filtreler</p>
           </div>
-          <ProductsFilters
-            category={resolvedSearchParams.category}
-            minPrice={resolvedSearchParams.minPrice}
-            maxPrice={resolvedSearchParams.maxPrice}
-            sort={resolvedSearchParams.sort}
-          />
+          <ProductsFilters {...filterProps} />
         </aside>
 
         <section>
@@ -116,7 +122,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               <Link key={product._id} href={`/products/${product.slug}`}>
                 <article className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5 transition hover:-translate-y-1 hover:border-[#6366f1] hover:shadow-[0_0_24px_rgba(99,102,241,0.2)]">
                   <div
-                    className={`relative mb-5 min-h-[280px] rounded-xl border border-[#1f1f1f] bg-gradient-to-b ${
+                    className={`relative mb-5 min-h-[220px] rounded-xl border border-[#1f1f1f] bg-gradient-to-b ${
                       imageGradients[index % imageGradients.length]
                     } p-4`}
                   >
@@ -126,7 +132,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                         alt={product.name}
                         fill
                         className="rounded-xl object-cover"
-                        sizes="(max-width: 1200px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : null}
                     <p className="relative z-10 inline-flex rounded-full border border-[#2a2a2a] bg-[#0b0b0b]/80 px-3 py-1 text-xs text-zinc-200">
@@ -140,10 +146,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                       productImage={product.images?.[0]?.url}
                     />
                   </div>
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-white">{product.name}</h3>
-                  <p className="mt-2 text-sm text-zinc-400">⭐ {(product.ratings?.avg ?? 0).toFixed(1)}</p>
-                  <div className="mt-3 flex items-center gap-2">
-                    <p className="text-xl font-semibold text-white">{product.price.toLocaleString("tr-TR")} TL</p>
+                  <h3 className="text-base font-semibold tracking-[-0.02em] text-white">{product.name}</h3>
+                  <p className="mt-1 text-sm text-zinc-400">⭐ {(product.ratings?.avg ?? 0).toFixed(1)}</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <p className="text-lg font-semibold text-white">{product.price.toLocaleString("tr-TR")} TL</p>
                     {product.comparePrice ? (
                       <p className="text-sm text-zinc-500 line-through">
                         {product.comparePrice.toLocaleString("tr-TR")} TL
