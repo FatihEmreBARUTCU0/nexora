@@ -6,9 +6,11 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
+import { useSession } from "next-auth/react";
 
 export type CartItem = {
   productId: string;
@@ -55,6 +57,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
+  useEffect(() => {
+    const previousStatus = prevSessionStatusRef.current;
+    prevSessionStatusRef.current = status;
+
+    if (status === "unauthenticated" && previousStatus === "authenticated") {
+      setItems([]);
+      localStorage.removeItem(CART_STORAGE_KEY);
+    }
+  }, [status]);
+
   const addToCart = useCallback((item: Omit<CartItem, "quantity">, quantity = 1) => {
     setItems((prev) => {
       const existing = prev.find(
@@ -94,6 +106,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = useCallback(() => {
     setItems([]);
+    localStorage.removeItem(CART_STORAGE_KEY);
   }, []);
 
   const mergeWithDB = useCallback((dbItems: CartItem[]) => {

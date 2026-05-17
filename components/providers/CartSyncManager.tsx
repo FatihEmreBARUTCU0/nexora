@@ -15,8 +15,14 @@ export function CartSyncManager() {
 
   // Giriş yapıldığında DB'den sepeti çek ve merge et
   useEffect(() => {
-    const wasUnauthenticated = prevStatusRef.current !== "authenticated";
+    const previousStatus = prevStatusRef.current;
+    const wasUnauthenticated = previousStatus !== "authenticated";
     prevStatusRef.current = status;
+
+    if (status === "unauthenticated" && previousStatus === "authenticated") {
+      syncedRef.current = false;
+      return;
+    }
 
     if (status !== "authenticated" || !session?.user?.id) return;
     if (syncedRef.current && !wasUnauthenticated) return;
@@ -59,13 +65,6 @@ export function CartSyncManager() {
       }
     };
   }, [items, status]);
-
-  // Çıkış yapılınca sync flag'i sıfırla
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      syncedRef.current = false;
-    }
-  }, [status]);
 
   return null;
 }
