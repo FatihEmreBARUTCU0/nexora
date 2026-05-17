@@ -45,8 +45,9 @@ function LoginForm() {
       const callbackUrl = searchParams.get("callbackUrl");
       const redirectTo =
         callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
-      router.push(redirectTo);
-      router.refresh();
+      
+      // Use window.location.href for hard redirect to ensure cookies are set
+      window.location.href = redirectTo;
     } catch {
       setErrorMessage("Giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.");
     }
