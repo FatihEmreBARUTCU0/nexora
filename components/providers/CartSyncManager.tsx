@@ -8,7 +8,7 @@ const SYNC_DEBOUNCE_MS = 1500;
 
 export function CartSyncManager() {
   const { data: session, status } = useSession();
-  const { items, mergeWithDB } = useCart();
+  const { items, mergeWithDB, clearCart } = useCart();
   const syncedRef = useRef(false);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevStatusRef = useRef(status);
@@ -20,6 +20,7 @@ export function CartSyncManager() {
     prevStatusRef.current = status;
 
     if (status === "unauthenticated" && previousStatus === "authenticated") {
+      clearCart();
       syncedRef.current = false;
       return;
     }
@@ -41,7 +42,7 @@ export function CartSyncManager() {
         syncedRef.current = true;
       }
     })();
-  }, [status, session?.user?.id, mergeWithDB]);
+  }, [status, session?.user?.id, mergeWithDB, clearCart]);
 
   // Sepet değişince debounce ile DB'ye kaydet
   useEffect(() => {
