@@ -16,7 +16,7 @@ export const authConfigEdge: NextAuthConfig = {
       if (user) {
         const u = user as { id?: string; role?: string };
         if (u.id) token.id = u.id;
-        if (u.role) token.role = u.role;
+        if (u.role) token.role = u.role as "user" | "admin";
       }
       return token;
     },
