@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import type { ComponentType } from "react";
 import { Folder, Shirt, Smartphone, Sparkles, Star, Waves } from "lucide-react";
+import { connectDB } from "@/lib/db";
+import Category from "@/models/Category";
+import Product from "@/models/Product";
 
 type CategoryItem = {
   _id: string;
@@ -18,20 +20,33 @@ const iconMap: Record<string, ComponentType<{ size?: number; className?: string 
   aksesuar: Star,
 };
 
-async function getCategories() {
-  const headerStore = await headers();
-  const host = headerStore.get("host");
-  const protocol = headerStore.get("x-forwarded-proto") ?? "http";
+async function getCategories(): Promise<CategoryItem[]> {
+  try {
+    await connectDB();
 
-  if (!host) return [] as CategoryItem[];
+    const categories = await Category.find({ isActive: true })
+      .select("_id name slug")
+      .lean<{ _id: unknown; name: string; slug: string }[]>();
 
-  const response = await fetch(`${protocol}://${host}/api/categories`, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error("Failed to fetch categories.");
+    const results = await Promise.all(
+      categories.map(async (cat) => {
+        const productCount = await Product.countDocuments({
+          category: cat._id,
+          isActive: true,
+        });
+        return {
+          _id: String(cat._id),
+          name: cat.name,
+          slug: cat.slug,
+          productCount,
+        };
+      })
+    );
+
+    return results;
+  } catch {
+    return [];
   }
-
-  const data = (await response.json()) as { categories: CategoryItem[] };
-  return data.categories;
 }
 
 export default async function CategoriesPage() {

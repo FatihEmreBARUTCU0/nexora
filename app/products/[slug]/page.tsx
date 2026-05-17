@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Star } from "lucide-react";
-import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { ProductDetailGallery } from "@/components/product/ProductDetailGallery";
 import { ProductVariantActions } from "@/components/product/ProductVariantActions";
 import type { VariantGroup } from "@/components/product/ProductVariantActions";
+import { connectDB } from "@/lib/db";
+import Product from "@/models/Product";
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -32,20 +33,15 @@ type ProductResponse = {
 
 async function fetchProduct(slug: string): Promise<ProductResponse | null> {
   try {
-    const headerStore = await headers();
-    const host = headerStore.get("host");
-    const protocol = headerStore.get("x-forwarded-proto") ?? "http";
+    await connectDB();
 
-    if (!host) return null;
+    const product = await Product.findOne({ slug, isActive: true })
+      .select("_id name slug description price comparePrice stock brand ratings images variants")
+      .lean<ProductResponse>();
 
-    const response = await fetch(`${protocol}://${host}/api/products?slug=${slug}&limit=1`, {
-      cache: "no-store",
-    });
+    if (!product) return null;
 
-    if (!response.ok) return null;
-
-    const data = (await response.json()) as { products: ProductResponse[] };
-    return data.products[0] ?? null;
+    return { ...product, _id: String(product._id) };
   } catch {
     return null;
   }
