@@ -72,7 +72,7 @@ export default function AdminOrdersPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white">Sipariş Yönetimi</h1>
+        <h1 className="text-2xl font-semibold tracking-[-0.03em] text-white md:text-3xl">Sipariş Yönetimi</h1>
         <select
           value={statusFilter}
           onChange={(event) => setStatusFilter(event.target.value as "all" | OrderStatus)}
@@ -85,64 +85,116 @@ export default function AdminOrdersPage() {
         </select>
       </div>
 
-      <section className="overflow-x-auto rounded-2xl border border-[#1f1f1f] bg-[#111111]">
-        <table className="w-full min-w-[940px] text-left text-sm">
-          <thead className="text-zinc-500">
-            <tr className="border-b border-[#1f1f1f]">
-              <th className="px-4 py-3 font-medium">Sipariş No</th>
-              <th className="px-4 py-3 font-medium">Müşteri</th>
-              <th className="px-4 py-3 font-medium">Ürünler</th>
-              <th className="px-4 py-3 font-medium">Toplam</th>
-              <th className="px-4 py-3 font-medium">Tarih</th>
-              <th className="px-4 py-3 font-medium">Durum</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td className="px-4 py-6 text-zinc-400" colSpan={6}>
-                  Loading orders...
-                </td>
-              </tr>
-            ) : (
-              filteredOrders.map((order) => (
-                <tr key={order._id} className="border-b border-[#191919] transition hover:bg-[#111111]">
-                  <td className="px-4 py-3 text-zinc-300">#{order._id.slice(-6).toUpperCase()}</td>
-                  <td className="px-4 py-3 text-zinc-300">{order.user?.name ?? "Unknown user"}</td>
-                  <td className="px-4 py-3 text-zinc-400">
-                    {order.items.slice(0, 2).map((item) => `${item.name} x${item.qty}`).join(", ")}
-                  </td>
-                  <td className="px-4 py-3 text-white">{order.total.toLocaleString("tr-TR")} TL</td>
-                  <td className="px-4 py-3 text-zinc-500">
-                    {new Date(order.createdAt).toLocaleDateString("tr-TR")}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className={`rounded-full border px-2.5 py-1 text-xs ${statusStyles[order.status]}`}>
-                        {statusLabels[order.status]}
-                      </span>
-                      <select
-                        value={order.status}
-                        onChange={(event) =>
-                          void handleStatusChange(order._id, event.target.value as OrderStatus)
-                        }
-                        className="rounded-md border border-[#2a2a2a] bg-[#0d0d0d] px-2 py-1 text-xs text-zinc-200"
-                      >
-                        <option value="pending">Beklemede</option>
-                        <option value="paid">Ödendi</option>
-                        <option value="shipped">Kargoda</option>
-                        <option value="delivered">Teslim Edildi</option>
-                        <option value="cancelled">İptal</option>
-                        <option value="failed">Başarısız</option>
-                      </select>
-                    </div>
-                  </td>
+      {loading ? (
+        <p className="py-10 text-center text-sm text-zinc-400">Siparişler yükleniyor...</p>
+      ) : filteredOrders.length === 0 ? (
+        <p className="py-10 text-center text-sm text-zinc-400">Sipariş bulunamadı.</p>
+      ) : (
+        <>
+          {/* Mobile card list */}
+          <div className="space-y-3 md:hidden">
+            {filteredOrders.map((order) => (
+              <div
+                key={order._id}
+                className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-zinc-200">
+                      #{order._id.slice(-6).toUpperCase()}
+                    </p>
+                    <p className="mt-0.5 text-xs text-zinc-400">{order.user?.name ?? "Bilinmiyor"}</p>
+                  </div>
+                  <span className={`shrink-0 rounded-full border px-2.5 py-1 text-xs ${statusStyles[order.status]}`}>
+                    {statusLabels[order.status]}
+                  </span>
+                </div>
+
+                <p className="mt-2 text-xs text-zinc-500 line-clamp-1">
+                  {order.items.slice(0, 2).map((item) => `${item.name} x${item.qty}`).join(", ")}
+                </p>
+
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-base font-semibold text-white">
+                      {order.total.toLocaleString("tr-TR")} TL
+                    </p>
+                    <p className="text-xs text-zinc-500">
+                      {new Date(order.createdAt).toLocaleDateString("tr-TR")}
+                    </p>
+                  </div>
+                  <select
+                    value={order.status}
+                    onChange={(event) =>
+                      void handleStatusChange(order._id, event.target.value as OrderStatus)
+                    }
+                    className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-3 py-2 text-xs text-zinc-200 focus:outline-none"
+                  >
+                    <option value="pending">Beklemede</option>
+                    <option value="paid">Ödendi</option>
+                    <option value="shipped">Kargoda</option>
+                    <option value="delivered">Teslim Edildi</option>
+                    <option value="cancelled">İptal</option>
+                    <option value="failed">Başarısız</option>
+                  </select>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop table */}
+          <section className="hidden overflow-x-auto rounded-2xl border border-[#1f1f1f] bg-[#111111] md:block">
+            <table className="w-full min-w-[940px] text-left text-sm">
+              <thead className="text-zinc-500">
+                <tr className="border-b border-[#1f1f1f]">
+                  <th className="px-4 py-3 font-medium">Sipariş No</th>
+                  <th className="px-4 py-3 font-medium">Müşteri</th>
+                  <th className="px-4 py-3 font-medium">Ürünler</th>
+                  <th className="px-4 py-3 font-medium">Toplam</th>
+                  <th className="px-4 py-3 font-medium">Tarih</th>
+                  <th className="px-4 py-3 font-medium">Durum</th>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </section>
+              </thead>
+              <tbody>
+                {filteredOrders.map((order) => (
+                  <tr key={order._id} className="border-b border-[#191919] transition hover:bg-[#111111]">
+                    <td className="px-4 py-3 text-zinc-300">#{order._id.slice(-6).toUpperCase()}</td>
+                    <td className="px-4 py-3 text-zinc-300">{order.user?.name ?? "Unknown user"}</td>
+                    <td className="px-4 py-3 text-zinc-400">
+                      {order.items.slice(0, 2).map((item) => `${item.name} x${item.qty}`).join(", ")}
+                    </td>
+                    <td className="px-4 py-3 text-white">{order.total.toLocaleString("tr-TR")} TL</td>
+                    <td className="px-4 py-3 text-zinc-500">
+                      {new Date(order.createdAt).toLocaleDateString("tr-TR")}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <span className={`rounded-full border px-2.5 py-1 text-xs ${statusStyles[order.status]}`}>
+                          {statusLabels[order.status]}
+                        </span>
+                        <select
+                          value={order.status}
+                          onChange={(event) =>
+                            void handleStatusChange(order._id, event.target.value as OrderStatus)
+                          }
+                          className="rounded-md border border-[#2a2a2a] bg-[#0d0d0d] px-2 py-1 text-xs text-zinc-200"
+                        >
+                          <option value="pending">Beklemede</option>
+                          <option value="paid">Ödendi</option>
+                          <option value="shipped">Kargoda</option>
+                          <option value="delivered">Teslim Edildi</option>
+                          <option value="cancelled">İptal</option>
+                          <option value="failed">Başarısız</option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        </>
+      )}
     </div>
   );
 }

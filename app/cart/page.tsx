@@ -44,40 +44,46 @@ export default function CartPage() {
           {items.map((item) => (
             <article
               key={`${item.productId}-${item.selectedColor ?? ""}-${item.selectedSize ?? ""}`}
-              className="grid gap-4 rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5 md:grid-cols-[120px_1fr_auto]"
+              className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-4 md:p-5"
             >
-              <CartItemImage item={item} />
-              <div>
-                <h2 className="text-lg font-medium text-white">{item.name}</h2>
-                <p className="mt-2 text-zinc-300">{item.price.toLocaleString("tr-TR")} TL</p>
-                <div className="mt-4 inline-flex items-center rounded-full border border-[#2a2a2a] bg-[#0d0d0d]">
-                  <button
-                    type="button"
-                    className="px-3 py-2 text-zinc-300 hover:text-white"
-                    aria-label="Azalt"
-                    onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                  >
-                    <Minus size={14} />
-                  </button>
-                  <span className="px-2 text-sm text-white">{item.quantity}</span>
-                  <button
-                    type="button"
-                    className="px-3 py-2 text-zinc-300 hover:text-white"
-                    aria-label="Arttır"
-                    onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                  >
-                    <Plus size={14} />
-                  </button>
+              <div className="flex gap-4">
+                <div className="shrink-0">
+                  <CartItemImage item={item} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h2 className="text-sm font-medium leading-snug text-white md:text-lg">{item.name}</h2>
+                    <button
+                      type="button"
+                      aria-label="Ürünü sil"
+                      className="shrink-0 rounded-full border border-[#2a2a2a] p-1.5 text-zinc-400 transition hover:border-[#3a3a3a] hover:text-white"
+                      onClick={() => removeFromCart(item.productId)}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                  <p className="mt-1 text-sm text-zinc-300 md:mt-2">{item.price.toLocaleString("tr-TR")} TL</p>
+                  <div className="mt-3 inline-flex items-center rounded-full border border-[#2a2a2a] bg-[#0d0d0d]">
+                    <button
+                      type="button"
+                      className="px-3 py-2 text-zinc-300 hover:text-white"
+                      aria-label="Azalt"
+                      onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                    >
+                      <Minus size={13} />
+                    </button>
+                    <span className="px-2 text-sm text-white">{item.quantity}</span>
+                    <button
+                      type="button"
+                      className="px-3 py-2 text-zinc-300 hover:text-white"
+                      aria-label="Arttır"
+                      onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                    >
+                      <Plus size={13} />
+                    </button>
+                  </div>
                 </div>
               </div>
-              <button
-                type="button"
-                aria-label="Ürünü sil"
-                className="h-fit rounded-full border border-[#2a2a2a] p-2 text-zinc-400 transition hover:border-[#3a3a3a] hover:text-white"
-                onClick={() => removeFromCart(item.productId)}
-              >
-                <Trash2 size={16} />
-              </button>
             </article>
           ))}
         </section>

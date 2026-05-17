@@ -103,26 +103,26 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
         {stats.map((stat) => (
-          <article key={stat.title} className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5">
-            <div className="mb-4 inline-flex rounded-lg border border-[#262626] bg-[#0d0d0d] p-2 text-zinc-300">
-              <stat.icon size={18} />
+          <article key={stat.title} className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-4 md:p-5">
+            <div className="mb-3 inline-flex rounded-lg border border-[#262626] bg-[#0d0d0d] p-2 text-zinc-300">
+              <stat.icon size={16} />
             </div>
-            <p className="text-sm text-zinc-400">{stat.title}</p>
-            <p className="mt-2 text-3xl font-semibold tracking-[-0.02em] text-white">{stat.value}</p>
+            <p className="text-xs text-zinc-400 md:text-sm">{stat.title}</p>
+            <p className="mt-1 text-xl font-semibold tracking-[-0.02em] text-white md:mt-2 md:text-3xl">{stat.value}</p>
             {stat.sub ? (
-              <p className="mt-3 inline-flex items-center gap-1 text-xs text-zinc-500">
+              <p className="mt-2 inline-flex items-center gap-1 text-xs text-zinc-500">
                 {stat.sub}
               </p>
             ) : (
               <p
-                className={`mt-3 inline-flex items-center gap-1 text-xs ${
+                className={`mt-2 inline-flex items-center gap-1 text-xs ${
                   stat.positive ? "text-[#86efac]" : "text-[#fca5a5]"
                 }`}
               >
-                {stat.positive ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-                {stat.positive ? "Normal seviye" : "Aksiyon gerekiyor"}
+                {stat.positive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                {stat.positive ? "Normal" : "Aksiyon gerekli"}
               </p>
             )}
           </article>
@@ -130,50 +130,79 @@ export default async function AdminDashboardPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
-        <section className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5">
-          <h2 className="mb-4 text-lg font-medium text-white">Son Siparişler</h2>
+        <section className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-4 md:p-5">
+          <h2 className="mb-4 text-base font-medium text-white md:text-lg">Son Siparişler</h2>
           {!data || data.recentOrders.length === 0 ? (
             <p className="py-6 text-center text-sm text-zinc-500">Henüz sipariş yok.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[680px] text-left text-sm">
-                <thead className="text-zinc-500">
-                  <tr className="border-b border-[#1f1f1f]">
-                    <th className="px-2 py-3 font-medium">Sipariş No</th>
-                    <th className="px-2 py-3 font-medium">Müşteri</th>
-                    <th className="px-2 py-3 font-medium">Ürünler</th>
-                    <th className="px-2 py-3 font-medium">Tutar</th>
-                    <th className="px-2 py-3 font-medium">Durum</th>
-                    <th className="px-2 py-3 font-medium">Tarih</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.recentOrders.map((order) => (
-                    <tr key={order.id} className="border-b border-[#181818]">
-                      <td className="px-2 py-3 text-zinc-300">#{order.id.slice(-6).toUpperCase()}</td>
-                      <td className="px-2 py-3 text-zinc-300">{order.customer}</td>
-                      <td className="px-2 py-3 max-w-[200px] truncate text-zinc-400">{order.items}</td>
-                      <td className="px-2 py-3 text-white">₺{order.amount.toLocaleString("tr-TR")}</td>
-                      <td className="px-2 py-3">
-                        <span
-                          className={`rounded-full border px-2.5 py-1 text-xs ${
-                            statusStyles[order.status] ?? "border-[#2a2a2a] text-zinc-400"
-                          }`}
-                        >
-                          {statusLabels[order.status] ?? order.status}
-                        </span>
-                      </td>
-                      <td className="px-2 py-3 text-zinc-500">{order.date}</td>
+            <>
+              {/* Mobile card view */}
+              <div className="space-y-3 md:hidden">
+                {data.recentOrders.map((order) => (
+                  <div key={order.id} className="rounded-xl border border-[#1d1d1d] bg-[#0d0d0d] p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-zinc-200">#{order.id.slice(-6).toUpperCase()}</p>
+                        <p className="mt-0.5 truncate text-xs text-zinc-400">{order.customer}</p>
+                        <p className="mt-0.5 truncate text-xs text-zinc-500">{order.items}</p>
+                      </div>
+                      <span
+                        className={`shrink-0 rounded-full border px-2 py-0.5 text-xs ${
+                          statusStyles[order.status] ?? "border-[#2a2a2a] text-zinc-400"
+                        }`}
+                      >
+                        {statusLabels[order.status] ?? order.status}
+                      </span>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between">
+                      <p className="text-sm font-medium text-white">₺{order.amount.toLocaleString("tr-TR")}</p>
+                      <p className="text-xs text-zinc-500">{order.date}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop table view */}
+              <div className="hidden overflow-x-auto md:block">
+                <table className="w-full min-w-[680px] text-left text-sm">
+                  <thead className="text-zinc-500">
+                    <tr className="border-b border-[#1f1f1f]">
+                      <th className="px-2 py-3 font-medium">Sipariş No</th>
+                      <th className="px-2 py-3 font-medium">Müşteri</th>
+                      <th className="px-2 py-3 font-medium">Ürünler</th>
+                      <th className="px-2 py-3 font-medium">Tutar</th>
+                      <th className="px-2 py-3 font-medium">Durum</th>
+                      <th className="px-2 py-3 font-medium">Tarih</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {data.recentOrders.map((order) => (
+                      <tr key={order.id} className="border-b border-[#181818]">
+                        <td className="px-2 py-3 text-zinc-300">#{order.id.slice(-6).toUpperCase()}</td>
+                        <td className="px-2 py-3 text-zinc-300">{order.customer}</td>
+                        <td className="px-2 py-3 max-w-[200px] truncate text-zinc-400">{order.items}</td>
+                        <td className="px-2 py-3 text-white">₺{order.amount.toLocaleString("tr-TR")}</td>
+                        <td className="px-2 py-3">
+                          <span
+                            className={`rounded-full border px-2.5 py-1 text-xs ${
+                              statusStyles[order.status] ?? "border-[#2a2a2a] text-zinc-400"
+                            }`}
+                          >
+                            {statusLabels[order.status] ?? order.status}
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-zinc-500">{order.date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </section>
 
-        <section className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5">
-          <h2 className="mb-4 text-lg font-medium text-white">Az Kalan Stok</h2>
+        <section className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-4 md:p-5">
+          <h2 className="mb-4 text-base font-medium text-white md:text-lg">Az Kalan Stok</h2>
           {!data || data.lowStock.length === 0 ? (
             <p className="py-6 text-center text-sm text-zinc-500">Stok sorunu yok.</p>
           ) : (
@@ -183,9 +212,9 @@ export default async function AdminDashboardPage() {
                   key={item.name}
                   className="flex items-center justify-between rounded-xl border border-[#1d1d1d] bg-[#0d0d0d] px-3 py-3"
                 >
-                  <p className="text-sm text-zinc-300">{item.name}</p>
+                  <p className="min-w-0 truncate pr-3 text-sm text-zinc-300">{item.name}</p>
                   <p
-                    className={`text-sm font-medium ${
+                    className={`shrink-0 text-sm font-medium ${
                       item.stock === 0 ? "text-[#ef4444]" : "text-[#f87171]"
                     }`}
                   >

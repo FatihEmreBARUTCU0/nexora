@@ -221,7 +221,7 @@ export function Navbar() {
             }
           }}
         >
-          <div ref={searchModalRef} className="mx-auto mt-24 w-full max-w-2xl rounded-2xl border border-[#2a2a2a] bg-[#111111] p-5 shadow-2xl">
+          <div ref={searchModalRef} className="mx-4 mt-16 w-full max-w-2xl rounded-2xl border border-[#2a2a2a] bg-[#111111] p-4 shadow-2xl sm:mx-auto sm:mt-24 sm:p-5">
             <input
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
