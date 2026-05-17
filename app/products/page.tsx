@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SlidersHorizontal } from "lucide-react";
-import { headers } from "next/headers";
 import { FavoriteButton } from "@/components/product/FavoriteButton";
 import { ProductsFilters } from "@/components/products/ProductsFilters";
+import { connectDB } from "@/lib/db";
+import Product from "@/models/Product";
+import mongoose from "mongoose";
 
 const imageGradients = [
   "from-[#0d0d1a] to-[#17172b]",
@@ -37,30 +39,39 @@ async function getProducts(filters: {
   minPrice?: string;
   maxPrice?: string;
   sort?: string;
-}) {
-  const headerStore = await headers();
-  const host = headerStore.get("host");
-  const protocol = headerStore.get("x-forwarded-proto") ?? "http";
+}): Promise<ApiProduct[]> {
+  try {
+    await connectDB();
 
-  if (!host) {
-    return [] as ApiProduct[];
+    const query: Record<string, unknown> = { isActive: true };
+
+    if (filters.category) {
+      if (mongoose.Types.ObjectId.isValid(filters.category)) {
+        query.category = new mongoose.Types.ObjectId(filters.category);
+      }
+    }
+
+    if (filters.minPrice || filters.maxPrice) {
+      query.price = {};
+      if (filters.minPrice) (query.price as Record<string, number>).$gte = Number(filters.minPrice);
+      if (filters.maxPrice) (query.price as Record<string, number>).$lte = Number(filters.maxPrice);
+    }
+
+    let sortOption: Record<string, 1 | -1> = { createdAt: -1 };
+    if (filters.sort === "price_asc") sortOption = { price: 1 };
+    else if (filters.sort === "price_desc") sortOption = { price: -1 };
+    else if (filters.sort === "popular") sortOption = { sold: -1 };
+
+    const products = await Product.find(query)
+      .select("_id name slug price comparePrice brand images ratings")
+      .sort(sortOption)
+      .limit(12)
+      .lean<ApiProduct[]>();
+
+    return products.map((p) => ({ ...p, _id: String(p._id) }));
+  } catch {
+    return [];
   }
-
-  const query = new URLSearchParams({ limit: "12", sort: filters.sort ?? "newest" });
-  if (filters.category) query.set("category", filters.category);
-  if (filters.minPrice) query.set("minPrice", filters.minPrice);
-  if (filters.maxPrice) query.set("maxPrice", filters.maxPrice);
-
-  const response = await fetch(`${protocol}://${host}/api/products?${query.toString()}`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch products.");
-  }
-
-  const data = (await response.json()) as { products: ApiProduct[] };
-  return data.products;
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
