@@ -23,7 +23,7 @@ export default function CartPage() {
           <p className="mt-3 text-zinc-400">Beğendiğiniz ürünleri sepete ekleyerek alışverişe başlayın.</p>
           <Link
             href="/products"
-            className="mt-8 rounded-full bg-[#6366f1] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="mt-8 rounded-full bg-[#b44dff] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             Alışverişe Başla
           </Link>
@@ -119,7 +119,7 @@ export default function CartPage() {
 
           <Link
             href="/checkout"
-            className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-[#6366f1] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-[#b44dff] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             Ödemeye Geç
           </Link>

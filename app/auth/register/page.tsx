@@ -75,21 +75,21 @@ export default function RegisterPage() {
             type="text"
             placeholder="Ad Soyad"
             {...register("name")}
-            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
           />
           {errors.name ? <p className="text-xs text-red-400">{errors.name.message}</p> : null}
           <input
             type="email"
             placeholder="E-posta"
             {...register("email")}
-            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
           />
           {errors.email ? <p className="text-xs text-red-400">{errors.email.message}</p> : null}
           <input
             type="password"
             placeholder="Şifre"
             {...register("password")}
-            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
           />
           {errors.password ? (
             <p className="text-xs text-red-400">{errors.password.message}</p>
@@ -98,7 +98,7 @@ export default function RegisterPage() {
             type="password"
             placeholder="Şifre Tekrar"
             {...register("confirmPassword")}
-            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
           />
           {errors.confirmPassword ? (
             <p className="text-xs text-red-400">{errors.confirmPassword.message}</p>
@@ -107,7 +107,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-xl bg-[#6366f1] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="w-full rounded-xl bg-[#b44dff] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             {isSubmitting ? "Kayıt yapılıyor..." : "Kayıt Ol"}
           </button>
@@ -115,7 +115,7 @@ export default function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-zinc-400">
           Zaten hesabın var mı?{" "}
-          <Link href="/auth/login" className="text-[#a5b4fc] hover:text-[#c7d2fe]">
+          <Link href="/auth/login" className="text-[#e0aaff] hover:text-[#f0d9ff]">
             Giriş yap
           </Link>
         </p>

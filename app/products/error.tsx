@@ -14,7 +14,7 @@ export default function ProductsError({ error, reset }: ProductsErrorProps) {
         <button
           type="button"
           onClick={reset}
-          className="mt-6 rounded-full bg-[#6366f1] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+          className="mt-6 rounded-full bg-[#b44dff] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
         >
           Try again
         </button>

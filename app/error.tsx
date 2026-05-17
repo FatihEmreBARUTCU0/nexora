@@ -27,13 +27,13 @@ export default function ErrorPage({
           <button
             type="button"
             onClick={reset}
-            className="inline-flex items-center justify-center rounded-full bg-[#6366f1] px-8 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="inline-flex items-center justify-center rounded-full bg-[#b44dff] px-8 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             Tekrar Dene
           </button>
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-full border border-[#2a2a2a] px-8 py-3 text-sm font-medium text-zinc-200 transition hover:border-[#6366f1] hover:text-white"
+            className="inline-flex items-center justify-center rounded-full border border-[#2a2a2a] px-8 py-3 text-sm font-medium text-zinc-200 transition hover:border-[#b44dff] hover:text-white"
           >
             Ana Sayfaya Dön
           </Link>

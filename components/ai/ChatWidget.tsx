@@ -105,7 +105,7 @@ export function ChatWidget() {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="fixed bottom-6 right-6 z-[70] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#6366f1] text-white shadow-[0_8px_30px_rgba(99,102,241,0.5)] transition hover:bg-[#5458e8]"
+        className="fixed bottom-6 right-6 z-[70] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#ff6a00] text-white shadow-[0_8px_30px_rgba(255,106,0,0.5)] transition hover:bg-[#e55f00]"
         aria-label="AI chat widget"
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
@@ -122,7 +122,7 @@ export function ChatWidget() {
                 key={`${message.role}-${index}`}
                 className={`max-w-[85%] rounded-xl px-3 py-2 text-sm ${
                   message.role === "user"
-                    ? "ml-auto bg-[#6366f1] text-white"
+                    ? "ml-auto bg-[#b44dff] text-white"
                     : "bg-[#1a1a1a] text-zinc-200"
                 }`}
               >
@@ -135,12 +135,12 @@ export function ChatWidget() {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               placeholder="Mesajınızı yazın..."
-              className="w-full rounded-lg border border-[#2a2a2a] bg-[#0d0d0d] px-3 py-2 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+              className="w-full rounded-lg border border-[#2a2a2a] bg-[#0d0d0d] px-3 py-2 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
             />
             <button
               type="submit"
               disabled={isLoading}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#6366f1] text-white transition hover:bg-[#5458e8] disabled:opacity-60"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#b44dff] text-white transition hover:bg-[#9f33ee] disabled:opacity-60"
             >
               <Send size={16} />
             </button>

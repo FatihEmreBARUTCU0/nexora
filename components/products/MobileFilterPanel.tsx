@@ -19,12 +19,12 @@ export function MobileFilterPanel(props: MobileFilterPanelProps) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#111111] px-4 py-2.5 text-sm text-zinc-300 hover:border-[#6366f1] hover:text-white"
+        className="inline-flex items-center gap-2 rounded-xl border border-[#2a2a2a] bg-[#111111] px-4 py-2.5 text-sm text-zinc-300 hover:border-[#b44dff] hover:text-white"
       >
         <SlidersHorizontal size={15} />
         Filtrele
         {props.category || props.minPrice || props.maxPrice ? (
-          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#6366f1] text-[10px] text-white">
+          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#b44dff] text-[10px] text-white">
             ●
           </span>
         ) : null}

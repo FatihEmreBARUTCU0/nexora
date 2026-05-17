@@ -77,7 +77,7 @@ function StripePaymentForm({ clientSecret, fullName, onSuccess }: StripePaymentF
         type="button"
         onClick={() => void handlePayment()}
         disabled={isProcessing || !stripe || !elements}
-        className="mt-4 w-full rounded-xl bg-[#6366f1] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8] disabled:opacity-70"
+        className="mt-4 w-full rounded-xl bg-[#b44dff] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#9f33ee] disabled:opacity-70"
       >
         {isProcessing ? "Ödeme işleniyor..." : "Kart ile Öde"}
       </button>
@@ -221,7 +221,7 @@ export default function CheckoutPage() {
             <div
               className={`rounded-full border px-3 py-1 text-xs tracking-[0.14em] ${
                 index <= step
-                  ? "border-[#6366f1] bg-[#6366f11f] text-[#c7d2fe]"
+                  ? "border-[#b44dff] bg-[#b44dff1f] text-[#f0d9ff]"
                   : "border-[#2a2a2a] text-zinc-500"
               }`}
             >
@@ -341,8 +341,8 @@ export default function CheckoutPage() {
               <h1 className="text-2xl font-semibold text-white">Ödeme</h1>
               {isDemoCheckout ? (
                 <>
-                  <div className="mt-6 rounded-xl border border-[#6366f144] bg-[#6366f10f] p-4 text-sm text-zinc-300">
-                    <p className="font-medium text-[#c7d2fe]">Demo ödeme</p>
+                  <div className="mt-6 rounded-xl border border-[#b44dff44] bg-[#b44dff0f] p-4 text-sm text-zinc-300">
+                    <p className="font-medium text-[#f0d9ff]">Demo ödeme</p>
                     <p className="mt-2">
                       Kart bilgisi gerekmez. Siparişiniz demo modunda anında onaylanır.
                     </p>
@@ -351,7 +351,7 @@ export default function CheckoutPage() {
                     type="button"
                     onClick={() => void createPaymentIntent()}
                     disabled={isCreatingIntent}
-                    className="mt-8 w-full rounded-xl bg-[#6366f1] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8] disabled:opacity-70"
+                    className="mt-8 w-full rounded-xl bg-[#b44dff] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#9f33ee] disabled:opacity-70"
                   >
                     {isCreatingIntent ? (
                       <span className="inline-flex items-center gap-2">
@@ -375,7 +375,7 @@ export default function CheckoutPage() {
                       type="button"
                       onClick={() => void createPaymentIntent()}
                       disabled={isCreatingIntent}
-                      className="mt-8 w-full rounded-xl bg-[#6366f1] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+                      className="mt-8 w-full rounded-xl bg-[#b44dff] px-5 py-4 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
                     >
                       {isCreatingIntent ? (
                         <span className="inline-flex items-center gap-2">
@@ -419,7 +419,7 @@ export default function CheckoutPage() {
                   if (!canProceed) return;
                   setStep((prev) => Math.min(prev + 1, 2));
                 }}
-                className="rounded-full bg-[#6366f1] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+                className="rounded-full bg-[#b44dff] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
               >
                 İleri
               </button>

@@ -66,8 +66,8 @@ export function ProductDetailGallery({ name, images }: ProductDetailGalleryProps
                 onClick={() => setActiveIndex(index)}
                 className={`relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border transition ${
                   isActive
-                    ? "border-[#6366f1] ring-2 ring-[#6366f1]/40"
-                    : "border-[#1f1f1f] hover:border-[#6366f1]"
+                    ? "border-[#b44dff] ring-2 ring-[#b44dff]/40"
+                    : "border-[#1f1f1f] hover:border-[#b44dff]"
                 }`}
                 aria-label={`${name} görsel ${index + 1}`}
               >

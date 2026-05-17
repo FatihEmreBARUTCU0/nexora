@@ -6,7 +6,7 @@ import { useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 
-const CONFETTI_COLORS = ["#6366f1", "#22c55e", "#f43f5e", "#eab308", "#38bdf8", "#a78bfa"];
+const CONFETTI_COLORS = ["#b44dff", "#ff6a00", "#22c55e", "#f43f5e", "#eab308", "#38bdf8"];
 
 export function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
@@ -57,7 +57,7 @@ export function CheckoutSuccessContent() {
         ))}
       </div>
 
-      <div className="relative z-10 w-full rounded-2xl border border-[#1f1f1f] bg-[#111111] px-8 py-12 text-center shadow-[0_0_48px_rgba(99,102,241,0.12)]">
+      <div className="relative z-10 w-full rounded-2xl border border-[#1f1f1f] bg-[#111111] px-8 py-12 text-center shadow-[0_0_48px_rgba(180,77,255,0.12)]">
         <div className="checkout-success-check mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-[#22c55e44] bg-[#22c55e14]">
           <Check className="h-12 w-12 text-[#86efac]" strokeWidth={2.5} />
         </div>
@@ -74,20 +74,20 @@ export function CheckoutSuccessContent() {
         {displayOrderId ? (
           <div className="mt-6 inline-flex flex-col items-center gap-1 rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-5 py-3">
             <span className="text-xs uppercase tracking-[0.14em] text-zinc-500">Sipariş No</span>
-            <span className="font-mono text-lg font-medium text-[#c7d2fe]">#{displayOrderId}</span>
+            <span className="font-mono text-lg font-medium text-[#f0d9ff]">#{displayOrderId}</span>
           </div>
         ) : null}
 
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/orders"
-            className="inline-flex items-center justify-center rounded-full bg-[#6366f1] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="inline-flex items-center justify-center rounded-full bg-[#b44dff] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             Siparişlerimi Gör
           </Link>
           <Link
             href="/products"
-            className="inline-flex items-center justify-center rounded-full border border-[#2a2a2a] px-8 py-4 text-sm font-medium text-zinc-200 transition hover:border-[#6366f1] hover:text-white"
+            className="inline-flex items-center justify-center rounded-full border border-[#2a2a2a] px-8 py-4 text-sm font-medium text-zinc-200 transition hover:border-[#b44dff] hover:text-white"
           >
             Alışverişe Devam Et
           </Link>

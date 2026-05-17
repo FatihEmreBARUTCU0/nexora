@@ -61,12 +61,12 @@ export function AISearchBar() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="örn. 500 TL altı bluetooth kulaklık..."
-          className="w-full rounded-full border border-[#2c2c2c] bg-[#0d0d0d] px-6 py-4 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+          className="w-full rounded-full border border-[#2c2c2c] bg-[#0d0d0d] px-6 py-4 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
         />
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-[#6366f1] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#5458e8] disabled:opacity-70"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6a00] px-8 py-4 text-sm font-medium text-white transition hover:bg-[#e55f00] disabled:opacity-70"
         >
           {loading ? "Aranıyor..." : "Ara"} <ArrowRight size={16} />
         </button>
@@ -103,9 +103,9 @@ export function AISearchBar() {
                     key={product._id}
                     href={`/products/${product.slug}`}
                     onClick={() => setIsResultsOpen(false)}
-                    className="flex items-center gap-3 rounded-xl border border-[#1f1f1f] bg-[#0d0d0d] px-4 py-3 transition hover:border-[#6366f1]"
+                    className="flex items-center gap-3 rounded-xl border border-[#1f1f1f] bg-[#0d0d0d] px-4 py-3 transition hover:border-[#b44dff]"
                   >
-                    <div className="h-10 w-10 rounded-md border border-[#1f1f1f] bg-gradient-to-b from-[#1a1a2b] to-[#0f0f16]" />
+                    <div className="h-10 w-10 rounded-md border border-[#1f1f1f] bg-gradient-to-b from-[#1e0833] to-[#0f0716]" />
                     <div>
                       <p className="text-sm text-white">{product.name}</p>
                       <p className="mt-1 text-xs text-zinc-400">{product.price.toLocaleString("tr-TR")} TL</p>

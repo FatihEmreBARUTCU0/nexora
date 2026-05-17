@@ -91,7 +91,7 @@ export default function OrdersPage() {
           <p className="mt-3 text-zinc-400">İlk siparişinizi oluşturmak için ürünleri keşfedin.</p>
           <Link
             href="/products"
-            className="mt-8 inline-flex rounded-full bg-[#6366f1] px-7 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="mt-8 inline-flex rounded-full bg-[#b44dff] px-7 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             Alışverişe Başla
           </Link>

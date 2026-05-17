@@ -221,7 +221,7 @@ export default function AdminProductsPage() {
         <button
           type="button"
           onClick={openCreateModal}
-          className="inline-flex items-center gap-2 rounded-xl bg-[#6366f1] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#5458e8] md:px-5 md:py-3"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#b44dff] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#9f33ee] md:px-5 md:py-3"
         >
           <Plus size={16} />
           Yeni Ürün
@@ -413,17 +413,17 @@ export default function AdminProductsPage() {
             </div>
 
             <div className="grid gap-3">
-              <input value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} placeholder="Ürün adı" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none" />
-              <textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} placeholder="Açıklama" className="min-h-[80px] rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none" />
+              <input value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} placeholder="Ürün adı" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none" />
+              <textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} placeholder="Açıklama" className="min-h-[80px] rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none" />
               <div className="grid grid-cols-2 gap-3">
-                <input value={form.price} onChange={(e) => setForm((p) => ({ ...p, price: e.target.value }))} placeholder="Fiyat" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none" />
-                <input value={form.comparePrice} onChange={(e) => setForm((p) => ({ ...p, comparePrice: e.target.value }))} placeholder="Karş. Fiyat" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none" />
+                <input value={form.price} onChange={(e) => setForm((p) => ({ ...p, price: e.target.value }))} placeholder="Fiyat" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none" />
+                <input value={form.comparePrice} onChange={(e) => setForm((p) => ({ ...p, comparePrice: e.target.value }))} placeholder="Karş. Fiyat" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none" />
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <input value={form.stock} onChange={(e) => setForm((p) => ({ ...p, stock: e.target.value }))} placeholder="Stok" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none" />
-                <input value={form.brand} onChange={(e) => setForm((p) => ({ ...p, brand: e.target.value }))} placeholder="Marka" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none" />
+                <input value={form.stock} onChange={(e) => setForm((p) => ({ ...p, stock: e.target.value }))} placeholder="Stok" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none" />
+                <input value={form.brand} onChange={(e) => setForm((p) => ({ ...p, brand: e.target.value }))} placeholder="Marka" className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none" />
               </div>
-              <select value={form.category} onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))} className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none">
+              <select value={form.category} onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))} className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none">
                 <option value="">Kategori seç</option>
                 {categories.map((category) => (
                   <option key={category._id} value={category._id}>
@@ -441,7 +441,7 @@ export default function AdminProductsPage() {
                       void handleImageUpload(selectedFile);
                     }
                   }}
-                  className="w-full text-sm text-zinc-300 file:mr-3 file:rounded-md file:border-0 file:bg-[#6366f1] file:px-3 file:py-2 file:text-white"
+                  className="w-full text-sm text-zinc-300 file:mr-3 file:rounded-md file:border-0 file:bg-[#b44dff] file:px-3 file:py-2 file:text-white"
                 />
                 {uploadingImage ? (
                   <p className="mt-2 text-xs text-zinc-400">Görsel yükleniyor...</p>
@@ -466,7 +466,7 @@ export default function AdminProductsPage() {
                 type="button"
                 disabled={saving}
                 onClick={() => void handleSubmit()}
-                className="rounded-xl bg-[#6366f1] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#5458e8] disabled:opacity-70"
+                className="rounded-xl bg-[#b44dff] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#9f33ee] disabled:opacity-70"
               >
                 {saving ? "Kaydediliyor..." : "Kaydet"}
               </button>

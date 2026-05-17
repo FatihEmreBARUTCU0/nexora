@@ -57,7 +57,7 @@ export function UpsellWidget() {
     return (
       <div className="mt-12 rounded-2xl border border-[#1f1f1f] bg-[#111111] p-6">
         <div className="flex items-center gap-2 text-zinc-400">
-          <Sparkles size={16} className="animate-pulse text-[#6366f1]" />
+          <Sparkles size={16} className="animate-pulse text-[#b44dff]" />
           <span className="text-sm">AI öneriler hazırlanıyor...</span>
         </div>
       </div>
@@ -69,9 +69,9 @@ export function UpsellWidget() {
   return (
     <section className="mt-12 rounded-2xl border border-[#1f1f1f] bg-[#111111] p-6">
       <div className="mb-6 flex items-center gap-3">
-        <Sparkles size={16} className="text-[#6366f1]" />
+        <Sparkles size={16} className="text-[#b44dff]" />
         <h2 className="text-lg font-medium text-white">Bunları da beğenebilirsin</h2>
-        <span className="rounded-full border border-[#6366f133] bg-[#6366f111] px-2 py-0.5 text-[10px] text-[#a5b4fc]">
+        <span className="rounded-full border border-[#b44dff33] bg-[#b44dff11] px-2 py-0.5 text-[10px] text-[#e0aaff]">
           AI Öneri
         </span>
       </div>
@@ -79,10 +79,10 @@ export function UpsellWidget() {
         {suggestions.map((product) => (
           <article
             key={product._id}
-            className="rounded-xl border border-[#1f1f1f] bg-[#0d0d0d] p-4 transition hover:border-[#6366f133]"
+            className="rounded-xl border border-[#1f1f1f] bg-[#0d0d0d] p-4 transition hover:border-[#b44dff33]"
           >
             <Link href={`/products/${product.slug}`} className="block">
-              <div className="relative mb-3 h-36 overflow-hidden rounded-lg border border-[#1f1f1f] bg-gradient-to-b from-[#1a1a2b] to-[#0f0f16]">
+              <div className="relative mb-3 h-36 overflow-hidden rounded-lg border border-[#1f1f1f] bg-gradient-to-b from-[#1e0833] to-[#0f0716]">
                 {product.images?.[0]?.url ? (
                   <Image
                     src={product.images[0].url}

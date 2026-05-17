@@ -120,7 +120,7 @@ export function ProductsFilters({ category, minPrice, maxPrice, sort }: Products
                 <span
                   className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
                     isSelected
-                      ? "border-[#6366f1] bg-[#6366f1]"
+                      ? "border-[#b44dff] bg-[#b44dff]"
                       : "border-zinc-500 bg-transparent"
                   }`}
                   aria-hidden
@@ -159,7 +159,7 @@ export function ProductsFilters({ category, minPrice, maxPrice, sort }: Products
           onMouseUp={handlePricePointerUp}
           onTouchEnd={handlePricePointerUp}
           onPointerUp={handlePricePointerUp}
-          className="w-full cursor-pointer accent-[#6366f1]"
+          className="w-full cursor-pointer accent-[#b44dff]"
           style={{ touchAction: "none" }}
         />
         <div className="mt-3 flex items-center justify-between text-xs text-zinc-400">
@@ -173,7 +173,7 @@ export function ProductsFilters({ category, minPrice, maxPrice, sort }: Products
         <select
           value={selectedSort}
           onChange={(event) => updateQuery({ sort: event.target.value })}
-          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#6366f1] focus:outline-none"
+          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white focus:border-[#b44dff] focus:outline-none"
         >
           <option value="newest">En Yeni</option>
           <option value="price_asc">Fiyat: Düşükten Yükseğe</option>

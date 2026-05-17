@@ -100,28 +100,28 @@ export default function ProfilePage() {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Ad Soyad"
-              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
             />
             <input
               value={currentPassword}
               onChange={(event) => setCurrentPassword(event.target.value)}
               type="password"
               placeholder="Mevcut şifre"
-              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
             />
             <input
               value={newPassword}
               onChange={(event) => setNewPassword(event.target.value)}
               type="password"
               placeholder="Yeni şifre"
-              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
             />
             <input
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
               type="password"
               placeholder="Yeni şifre tekrar"
-              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
             />
 
             {error ? <p className="text-sm text-red-400">{error}</p> : null}
@@ -130,7 +130,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-xl bg-[#6366f1] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8] disabled:opacity-70"
+              className="rounded-xl bg-[#b44dff] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee] disabled:opacity-70"
             >
               {loading ? "Kaydediliyor..." : "Kaydet"}
             </button>

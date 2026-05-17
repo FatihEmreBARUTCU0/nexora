@@ -19,16 +19,16 @@ type FeaturedProduct = {
 };
 
 const badgeStyles: Record<string, string> = {
-  Yeni: "border-[#6366f144] bg-[#6366f11f] text-[#a5b4fc]",
-  İndirim: "border-[#22c55e44] bg-[#22c55e1a] text-[#86efac]",
+  Yeni: "border-[#b44dff44] bg-[#b44dff1f] text-[#e0aaff]",
+  İndirim: "border-[#ff6a0044] bg-[#ff6a001a] text-[#ffb380]",
   "Çok Satan": "border-[#f59e0b44] bg-[#f59e0b1a] text-[#fcd34d]",
 };
 
 const featuredGradients = [
-  "from-[#23243d] via-[#171727] to-[#0f0f16]",
-  "from-[#1d2537] via-[#141a26] to-[#0d1018]",
-  "from-[#1a2b24] via-[#13201b] to-[#0d1612]",
-  "from-[#2a2042] via-[#1b1730] to-[#110f1d]",
+  "from-[#1e0833] via-[#170a2b] to-[#0f0f16]",
+  "from-[#2a1200] via-[#1a0d00] to-[#0d0800]",
+  "from-[#230040] via-[#1b0030] to-[#110020]",
+  "from-[#1a0d2e] via-[#130826] to-[#0d0418]",
 ];
 
 function getBadgeFromSold(sold: number): keyof typeof badgeStyles {
@@ -49,7 +49,7 @@ export function FeaturedProductsGrid({ products }: { products: FeaturedProduct[]
           <Link
             key={product._id}
             href={`/products/${product.slug}`}
-            className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#6366f1] hover:shadow-[0_0_28px_rgba(99,102,241,0.22)]"
+            className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#b44dff] hover:shadow-[0_0_28px_rgba(180,77,255,0.22)]"
           >
             <div
               className={`relative mb-6 min-h-[280px] overflow-hidden rounded-xl border border-[#1f1f1f] bg-gradient-to-b ${
@@ -87,7 +87,7 @@ export function FeaturedProductsGrid({ products }: { products: FeaturedProduct[]
                   );
                   toast.success("Ürün sepete eklendi!");
                 }}
-                className="absolute bottom-4 left-4 right-4 z-10 rounded-full border border-[#2a2a2a] bg-[#0a0a0a]/90 px-4 py-3 text-sm font-medium text-white transition sm:opacity-0 sm:group-hover:opacity-100"
+                className="absolute bottom-4 left-4 right-4 z-10 rounded-full border border-[#2a2a2a] bg-[#0a0a0a]/90 px-4 py-3 text-sm font-medium text-white transition hover:bg-[#b44dff] hover:border-[#b44dff] sm:opacity-0 sm:group-hover:opacity-100"
               >
                 Sepete Ekle
               </button>

@@ -63,14 +63,14 @@ function LoginForm() {
           type="email"
           placeholder="E-posta"
           {...register("email")}
-          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
         />
         {errors.email ? <p className="text-xs text-red-400">{errors.email.message}</p> : null}
         <input
           type="password"
           placeholder="Şifre"
           {...register("password")}
-          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
         />
         {errors.password ? (
           <p className="text-xs text-red-400">{errors.password.message}</p>
@@ -79,7 +79,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-xl bg-[#6366f1] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+          className="w-full rounded-xl bg-[#b44dff] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
         >
           {isSubmitting ? "Giriş yapılıyor..." : "Giriş Yap"}
         </button>
@@ -87,7 +87,7 @@ function LoginForm() {
 
       <p className="mt-6 text-center text-sm text-zinc-400">
         Hesabın yok mu?{" "}
-        <Link href="/auth/register" className="text-[#a5b4fc] hover:text-[#c7d2fe]">
+        <Link href="/auth/register" className="text-[#e0aaff] hover:text-[#f0d9ff]">
           Kayıt ol
         </Link>
       </p>

@@ -90,7 +90,7 @@ export default function FavoritesPage() {
           </p>
           <Link
             href="/products"
-            className="mt-6 inline-flex rounded-full bg-[#6366f1] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+            className="mt-6 inline-flex rounded-full bg-[#b44dff] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
           >
             Ürünleri Keşfet
           </Link>
@@ -110,7 +110,7 @@ export default function FavoritesPage() {
                       sizes="(max-width: 1280px) 50vw, 33vw"
                     />
                   ) : (
-                    <div className="h-full w-full bg-gradient-to-b from-[#1a1a2b] to-[#0f0f16]" />
+                    <div className="h-full w-full bg-gradient-to-b from-[#1e0833] to-[#0f0716]" />
                   )}
                 </div>
                 <h2 className="text-lg font-medium text-white">{item.name}</h2>
@@ -132,7 +132,7 @@ export default function FavoritesPage() {
                     );
                     toast.success("Ürün sepete eklendi!");
                   }}
-                  className="rounded-full bg-[#6366f1] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+                  className="rounded-full bg-[#b44dff] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#9f33ee]"
                 >
                   Sepete Ekle
                 </button>

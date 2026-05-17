@@ -131,7 +131,7 @@ export function Navbar() {
           <Link href="/cart" aria-label="Sepet" className="relative text-zinc-300 hover:text-white">
             <ShoppingBag size={20} />
             {totalItems > 0 ? (
-              <span className="absolute -right-2 -top-2 inline-flex min-h-4 min-w-4 items-center justify-center rounded-full bg-[#6366f1] px-1 text-[10px] font-medium text-white">
+              <span className="absolute -right-2 -top-2 inline-flex min-h-4 min-w-4 items-center justify-center rounded-full bg-[#ff6a00] px-1 text-[10px] font-medium text-white">
                 {totalItems}
               </span>
             ) : null}
@@ -227,7 +227,7 @@ export function Navbar() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Ürün ara..."
               autoFocus
-              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+              className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#b44dff] focus:outline-none"
             />
             <div className="mt-4 max-h-[360px] overflow-y-auto">
               {isSearching ? (
@@ -239,7 +239,7 @@ export function Navbar() {
                       key={item._id}
                       href={`/products/${item.slug}`}
                       onClick={() => setIsSearchOpen(false)}
-                      className="flex items-center gap-3 rounded-xl border border-[#1f1f1f] bg-[#0d0d0d] p-3 transition hover:border-[#6366f1]"
+                      className="flex items-center gap-3 rounded-xl border border-[#1f1f1f] bg-[#0d0d0d] p-3 transition hover:border-[#b44dff]"
                     >
                       <div className="h-12 w-12 rounded-lg border border-[#1f1f1f] bg-gradient-to-b from-[#1a1a2b] to-[#0f0f16]" />
                       <div className="flex-1">

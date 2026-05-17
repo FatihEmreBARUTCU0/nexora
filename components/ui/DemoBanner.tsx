@@ -6,7 +6,7 @@ export function DemoBanner() {
   return (
     <p
       role="status"
-      className="border-b border-[#6366f144] bg-[#6366f114] px-4 py-2 text-center text-xs text-[#c7d2fe]"
+      className="border-b border-[#ff6a0044] bg-[#ff6a0014] px-4 py-2 text-center text-xs text-[#ffb380]"
     >
       Demo ortamı — gerçek ödeme alınmaz. Siparişler simüle edilir.
     </p>

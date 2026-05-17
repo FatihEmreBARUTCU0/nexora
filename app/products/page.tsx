@@ -120,7 +120,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((product, index) => (
               <Link key={product._id} href={`/products/${product.slug}`}>
-                <article className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5 transition hover:-translate-y-1 hover:border-[#6366f1] hover:shadow-[0_0_24px_rgba(99,102,241,0.2)]">
+                <article className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5 transition hover:-translate-y-1 hover:border-[#b44dff] hover:shadow-[0_0_24px_rgba(180,77,255,0.2)]">
                   <div
                     className={`relative mb-5 min-h-[220px] rounded-xl border border-[#1f1f1f] bg-gradient-to-b ${
                       imageGradients[index % imageGradients.length]

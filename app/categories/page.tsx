@@ -68,9 +68,9 @@ export default async function CategoriesPage() {
             <Link
               key={category._id}
               href={`/products?category=${category.slug}`}
-              className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-8 transition hover:-translate-y-1 hover:border-[#6366f1] hover:shadow-[0_0_28px_rgba(99,102,241,0.2)]"
+              className="group rounded-2xl border border-[#1f1f1f] bg-[#111111] p-8 transition hover:-translate-y-1 hover:border-[#ff6a00] hover:shadow-[0_0_28px_rgba(255,106,0,0.2)]"
             >
-              <Icon className="mb-6 text-zinc-300 transition group-hover:text-[#6366f1]" size={28} />
+              <Icon className="mb-6 text-zinc-300 transition group-hover:text-[#ff6a00]" size={28} />
               <h2 className="text-xl font-medium text-white">{category.name}</h2>
               <p className="mt-2 text-sm text-zinc-400">{category.productCount} ürün</p>
             </Link>

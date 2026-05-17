@@ -49,7 +49,7 @@ export function RecommendationsWidget() {
           <Link
             key={product._id}
             href={`/products/${product.slug}`}
-            className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5 transition hover:-translate-y-1 hover:border-[#6366f1]"
+            className="rounded-2xl border border-[#1f1f1f] bg-[#111111] p-5 transition hover:-translate-y-1 hover:border-[#b44dff]"
           >
             <ProductThumbnail
               name={product.name}

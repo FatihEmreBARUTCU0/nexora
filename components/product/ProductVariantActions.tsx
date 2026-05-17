@@ -43,8 +43,8 @@ export function ProductVariantActions({ product, variantGroups }: ProductVariant
                 }
                 className={`rounded-full border px-4 py-2 text-sm text-zinc-200 transition ${
                   selectedVariants[group.label] === value
-                    ? "border-[#6366f1] bg-[#6366f11a]"
-                    : "border-[#2a2a2a] hover:border-[#6366f1]"
+                    ? "border-[#b44dff] bg-[#b44dff1a]"
+                    : "border-[#2a2a2a] hover:border-[#b44dff]"
                 }`}
               >
                 {value}
