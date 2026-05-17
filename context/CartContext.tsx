@@ -39,6 +39,8 @@ const CART_STORAGE_KEY = "nexora-cart";
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { status } = useSession();
+  const prevSessionStatusRef = useRef(status);
   const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
