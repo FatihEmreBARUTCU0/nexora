@@ -31,6 +31,16 @@ export async function proxy(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  // Debug log for production
+  if (process.env.NEXORA_DEMO_MODE === "true") {
+    console.log("[Proxy Debug]", {
+      pathname,
+      hasToken: !!token,
+      tokenEmail: token?.email,
+      cookies: request.cookies.getAll().map(c => c.name),
+    });
+  }
+
   if (!token) {
     const loginUrl = new URL("/auth/login", request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
