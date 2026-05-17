@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { AISearchBar } from "@/components/ai/AISearchBar";
 import { RecommendationsWidget } from "@/components/ai/RecommendationsWidget";
 import { FeaturedProductsGrid } from "@/components/home/FeaturedProductsGrid";
+import { connectDB } from "@/lib/db";
+import Product from "@/models/Product";
 import {
   ArrowRight,
   Shirt,
@@ -34,29 +35,18 @@ type FeaturedProduct = {
   slug: string;
 };
 
-async function getFeaturedProducts() {
+async function getFeaturedProducts(): Promise<FeaturedProduct[]> {
   try {
-    const headerStore = await headers();
-    const host = headerStore.get("host");
-    const protocol = headerStore.get("x-forwarded-proto") ?? "http";
-
-    if (!host) {
-      return [] as FeaturedProduct[];
-    }
-
-    const response = await fetch(`${protocol}://${host}/api/products?limit=4&sort=sold`, {
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      return [] as FeaturedProduct[];
-    }
-
-    const data = (await response.json()) as { products: FeaturedProduct[] };
-    return data.products;
+    await connectDB();
+    const products = await Product.find({ isActive: true })
+      .sort({ sold: -1 })
+      .limit(4)
+      .select("_id name price comparePrice brand sold ratings images slug")
+      .lean<FeaturedProduct[]>();
+    return products;
   } catch (error) {
     console.error("Featured products fetch error:", error);
-    return [] as FeaturedProduct[];
+    return [];
   }
 }
 
