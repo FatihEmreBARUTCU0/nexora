@@ -1,5 +1,8 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
+import { authConfigEdge } from "@/lib/auth-config-edge";
+
+const { auth } = NextAuth(authConfigEdge);
 
 const adminPathPrefixes = ["/dashboard", "/admin-products", "/admin-orders"];
 const authRequiredPathPrefixes = ["/orders", "/profile", "/checkout"];
@@ -10,8 +13,9 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
 };
 
-export async function proxy(request: NextRequest) {
+export const proxy = auth(function middleware(request) {
   const { pathname } = request.nextUrl;
+  const session = request.auth;
 
   const isAdminPath = adminPathPrefixes.some((prefix) => pathname.startsWith(prefix));
   const isAuthRequiredPath = authRequiredPathPrefixes.some((prefix) =>
@@ -26,28 +30,14 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-
-  // Debug log for production
-  if (process.env.NEXORA_DEMO_MODE === "true") {
-    console.log("[Proxy Debug]", {
-      pathname,
-      hasToken: !!token,
-      tokenEmail: token?.email,
-      cookies: request.cookies.getAll().map(c => c.name),
-    });
-  }
-
-  if (!token) {
+  if (!session) {
     const loginUrl = new URL("/auth/login", request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isAdminPath && token.role !== "admin") {
+  const userRole = (session.user as { role?: string })?.role;
+  if (isAdminPath && userRole !== "admin") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -56,7 +46,7 @@ export async function proxy(request: NextRequest) {
     response.headers.set(key, value);
   }
   return response;
-}
+});
 
 export const config = {
   matcher: [
