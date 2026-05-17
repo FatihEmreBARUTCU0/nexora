@@ -5,7 +5,7 @@ import { FavoriteButton } from "@/components/product/FavoriteButton";
 import { ProductsFilters } from "@/components/products/ProductsFilters";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
-import mongoose from "mongoose";
+import Category from "@/models/Category";
 
 const imageGradients = [
   "from-[#0d0d1a] to-[#17172b]",
@@ -46,8 +46,10 @@ async function getProducts(filters: {
     const query: Record<string, unknown> = { isActive: true };
 
     if (filters.category) {
-      if (mongoose.Types.ObjectId.isValid(filters.category)) {
-        query.category = new mongoose.Types.ObjectId(filters.category);
+      // category param is a slug (e.g. "elektronik"), look up its ObjectId first
+      const categoryDoc = await Category.findOne({ slug: filters.category }).select("_id").lean<{ _id: unknown }>();
+      if (categoryDoc) {
+        query.category = categoryDoc._id;
       }
     }
 
