@@ -1,0 +1,127 @@
+# Nexora E-Ticaret — Cursor Kuralları
+
+## Proje
+Next.js 14 App Router tabanlı tam kapsamlı e-ticaret sitesi.
+Marka adı: Nexora. Sektör: Genel market (Amazon tarzı).
+
+## Tech Stack
+- Frontend: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- Backend: Next.js API Routes (route.ts)
+- Veritabanı: MongoDB Atlas + Mongoose
+- Auth: NextAuth.js v5 (kullanıcı + admin rolü)
+- Görsel: Cloudinary
+- Ödeme: iyzico
+- AI: Groq API (llama-3.3-70b-versatile modeli)
+- Deploy: Vercel
+
+## Klasör Yapısı
+```
+nexora/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx                  # Ana sayfa
+│   ├── products/
+│   │   ├── page.tsx              # Ürün listesi
+│   │   └── [slug]/page.tsx       # Ürün detay
+│   ├── cart/page.tsx
+│   ├── checkout/page.tsx
+│   ├── orders/page.tsx
+│   ├── (admin)/
+│   │   ├── layout.tsx            # Admin layout (rol kontrolü)
+│   │   ├── dashboard/page.tsx
+│   │   ├── products/page.tsx
+│   │   └── orders/page.tsx
+│   └── api/
+│       ├── auth/[...nextauth]/route.ts
+│       ├── products/route.ts
+│       ├── products/[id]/route.ts
+│       ├── orders/route.ts
+│       ├── orders/[id]/route.ts
+│       ├── cart/route.ts
+│       ├── webhook/iyzico/route.ts
+│       └── ai/
+│           ├── recommend/route.ts
+│           ├── search/route.ts
+│           ├── chat/route.ts
+│           └── upsell/route.ts
+├── lib/
+│   ├── db.ts                     # MongoDB singleton bağlantısı
+│   ├── cloudinary.ts
+│   ├── iyzico.ts
+│   └── groq.ts                   # Groq client
+├── models/
+│   ├── Product.ts
+│   ├── User.ts
+│   ├── Order.ts
+│   └── Category.ts
+├── components/
+│   ├── ui/                       # Genel UI bileşenleri
+│   ├── product/                  # Ürün kartı, galeri vb.
+│   ├── cart/                     # Sepet bileşenleri
+│   ├── admin/                    # Admin panel bileşenleri
+│   └── ai/                       # AI widget bileşenleri
+├── context/
+│   └── CartContext.tsx           # Sepet state yönetimi
+├── types/
+│   └── index.ts                  # TypeScript tipleri
+└── middleware.ts                 # Auth ve admin koruması
+```
+
+## Kodlama Kuralları
+
+### Genel
+- TypeScript kullan, tip güvenliğine dikkat et
+- Her component için named export kullan (default export sadece page.tsx'lerde)
+- Tailwind ile stillendir, inline style yazma
+- Server Component öncelikli; gerektiğinde "use client" ekle
+
+### API Route'lar
+- Her zaman try/catch kullan
+- Hata durumunda NextResponse.json({ error: "..." }, { status: ... }) dön
+- MongoDB bağlantısını her route başında await connectDB() ile kur
+- Admin gerektiren endpoint'lerde session.user.role === "admin" kontrolü yap
+
+### MongoDB / Mongoose
+- Model dosyaları: models/ klasöründe, PascalCase isimlendirme
+- Bağlantı: lib/db.ts singleton pattern — her zaman buradan import et
+- Schema'da timestamps: true kullan
+- populate() yerine aggregation tercih et büyük veri setlerinde
+
+### Güvenlik
+- .env.local değişkenlerini asla client component'e doğrudan verme
+- API route'larda her zaman session kontrolü yap
+- Admin sayfalarını proxy.ts ile koru (Next.js 16)
+
+### Environment Variables
+```
+MONGODB_URI=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+IYZICO_API_KEY=
+IYZICO_SECRET_KEY=
+IYZICO_BASE_URL=https://sandbox-api.iyzipay.com
+GROQ_API_KEY=
+```
+
+### AI Özellikleri (Groq)
+- Model: llama-3.3-70b-versatile
+- Her AI route'u streaming desteklemeli (ReadableStream)
+- AI yanıtlarını her zaman JSON parse et, hata yönetimi yap
+- Kullanıcı verisini (sepet, geçmiş) context olarak Groq'a gönder
+- Türkçe sistem prompt'ları yaz
+
+## Naming Convention
+- Dosyalar: kebab-case (product-card.tsx)
+- Component'ler: PascalCase (ProductCard)
+- Fonksiyonlar: camelCase (getProductBySlug)
+- Sabitler: UPPER_SNAKE_CASE (MAX_CART_ITEMS)
+- MongoDB field'ları: camelCase
+
+## Yasaklar
+- any tipi kullanma, unknown kullan
+- console.log bırakma (sadece geliştirme aşamasında)
+- Hardcoded URL yazma, env variable kullan
+- CSS module kullanma, sadece Tailwind
