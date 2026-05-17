@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { Search, ShoppingBag, User } from "lucide-react";
+import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/context/CartContext";
 
@@ -20,6 +20,7 @@ export function Navbar() {
   const { data: session } = useSession();
   const userInitial = session?.user?.name?.charAt(0).toUpperCase() ?? "U";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<
@@ -113,6 +114,14 @@ export function Navbar() {
         <div className="flex items-center gap-5">
           <button
             type="button"
+            aria-label={isMobileNavOpen ? "Menüyü kapat" : "Menüyü aç"}
+            onClick={() => setIsMobileNavOpen((prev) => !prev)}
+            className="text-zinc-300 hover:text-white md:hidden"
+          >
+            {isMobileNavOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+          <button
+            type="button"
             aria-label="Ara"
             onClick={() => setIsSearchOpen(true)}
             className="text-zinc-300 hover:text-white"
@@ -182,6 +191,27 @@ export function Navbar() {
           )}
         </div>
       </div>
+      {isMobileNavOpen ? (
+        <nav className="border-t border-[#1f1f1f] bg-[#080808] px-6 py-4 md:hidden">
+          <ul className="space-y-1">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={() => setIsMobileNavOpen(false)}
+                  className={`block rounded-xl px-4 py-3 text-sm transition ${
+                    pathname === link.href
+                      ? "bg-[#1a1a1a] text-white"
+                      : "text-zinc-300 hover:bg-[#141414] hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : null}
       {isSearchOpen ? (
         <div
           className="fixed inset-0 z-[90] bg-black/75 backdrop-blur-sm"
