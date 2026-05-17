@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,8 +15,9 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {
     register,
@@ -41,7 +42,10 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/");
+      const callbackUrl = searchParams.get("callbackUrl");
+      const redirectTo =
+        callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
+      router.push(redirectTo);
       router.refresh();
     } catch {
       setErrorMessage("Giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.");
@@ -49,45 +53,53 @@ export default function LoginPage() {
   };
 
   return (
+    <section className="w-full max-w-md rounded-2xl border border-[#1f1f1f] bg-[#111111] p-8 md:p-10">
+      <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white">Giriş Yap</h1>
+      <p className="mt-2 text-sm text-zinc-400">Nexora hesabınla devam et.</p>
+
+      <form className="mt-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <input
+          type="email"
+          placeholder="E-posta"
+          {...register("email")}
+          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+        />
+        {errors.email ? <p className="text-xs text-red-400">{errors.email.message}</p> : null}
+        <input
+          type="password"
+          placeholder="Şifre"
+          {...register("password")}
+          className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
+        />
+        {errors.password ? (
+          <p className="text-xs text-red-400">{errors.password.message}</p>
+        ) : null}
+        {errorMessage ? <p className="text-sm text-red-400">{errorMessage}</p> : null}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full rounded-xl bg-[#6366f1] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
+        >
+          {isSubmitting ? "Giriş yapılıyor..." : "Giriş Yap"}
+        </button>
+      </form>
+
+      <p className="mt-6 text-center text-sm text-zinc-400">
+        Hesabın yok mu?{" "}
+        <Link href="/auth/register" className="text-[#a5b4fc] hover:text-[#c7d2fe]">
+          Kayıt ol
+        </Link>
+      </p>
+    </section>
+  );
+}
+
+export default function LoginPage() {
+  return (
     <div className="mx-auto flex min-h-[calc(100vh-220px)] w-full max-w-7xl items-center justify-center px-6 py-16 md:px-10">
-      <section className="w-full max-w-md rounded-2xl border border-[#1f1f1f] bg-[#111111] p-8 md:p-10">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-white">Giriş Yap</h1>
-        <p className="mt-2 text-sm text-zinc-400">Nexora hesabınla devam et.</p>
-
-        <form className="mt-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="email"
-            placeholder="E-posta"
-            {...register("email")}
-            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
-          />
-          {errors.email ? <p className="text-xs text-red-400">{errors.email.message}</p> : null}
-          <input
-            type="password"
-            placeholder="Şifre"
-            {...register("password")}
-            className="w-full rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-[#6366f1] focus:outline-none"
-          />
-          {errors.password ? (
-            <p className="text-xs text-red-400">{errors.password.message}</p>
-          ) : null}
-          {errorMessage ? <p className="text-sm text-red-400">{errorMessage}</p> : null}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-xl bg-[#6366f1] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#5458e8]"
-          >
-            {isSubmitting ? "Giriş yapılıyor..." : "Giriş Yap"}
-          </button>
-        </form>
-
-        <p className="mt-6 text-center text-sm text-zinc-400">
-          Hesabın yok mu?{" "}
-          <Link href="/auth/register" className="text-[#a5b4fc] hover:text-[#c7d2fe]">
-            Kayıt ol
-          </Link>
-        </p>
-      </section>
+      <Suspense fallback={null}>
+        <LoginForm />
+      </Suspense>
     </div>
   );
 }
